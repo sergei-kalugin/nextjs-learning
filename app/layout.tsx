@@ -10,8 +10,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.className} antialiased`}>
     <body>
+
     <div className="test-div">
-      <h1 className="text-blue-500">Foo bar baz!</h1>
+      <h1 className="text-blue-500">I'm from the "/" layout!</h1>
     </div>
 
     {children}
