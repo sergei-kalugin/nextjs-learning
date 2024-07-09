@@ -1,6 +1,8 @@
+"use client";
 import React from "react";
 import "@/app/ui/global.scss";
 import { inter } from "@/app/ui/fonts";
+import {usePathname} from "next/navigation";
 
 export default function RootLayout({
   children,
@@ -13,6 +15,9 @@ export default function RootLayout({
 
     <div className="test-div">
       <h1 className="text-blue-500">I'm from the "/" layout!</h1>
+      <p>
+        { usePathname() }
+      </p>
     </div>
 
     {children}
