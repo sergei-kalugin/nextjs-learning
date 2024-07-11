@@ -27,7 +27,6 @@ async function seedUsers() {
 
 async function seedInvoices() {
   await db.execute(sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
-
   await db.execute(sql`
     CREATE TABLE IF NOT EXISTS invoices (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
@@ -38,13 +37,12 @@ async function seedInvoices() {
     );
   `);
 
-  return await Promise.all(
-      invoices.map(
-          (invoice) => db.execute(sql`
-              INSERT INTO invoices (customer_id, amount, status, date)
-              VALUES (${invoice.customer_id}, ${invoice.amount}, ${invoice.status},
-                      ${invoice.date}) ON CONFLICT (id) DO NOTHING;
-          `),
+  return Promise.all(
+      invoices.map((invoice) => {
+            return db.execute(sql`
+          INSERT INTO invoices (customer_id, amount, status, date) VALUES (${invoice.customer_id}, ${invoice.amount}, ${invoice.status}, ${invoice.date}) ON CONFLICT (id) DO NOTHING;
+        `)
+          },
       ),
   );
 }
@@ -81,8 +79,7 @@ async function seedRevenue() {
   `);
 
   return await Promise.all(
-      revenue.map(
-          (rev) => db.execute(sql`
+      revenue.map((rev) => db.execute(sql`
               INSERT INTO revenue (month, revenue)
               VALUES (${rev.month}, ${rev.revenue}) ON CONFLICT (month) DO NOTHING;
           `),
@@ -93,10 +90,10 @@ async function seedRevenue() {
 export async function GET() {
   try {
     await db.execute(sql`BEGIN`);
-    await seedUsers();
-    await seedCustomers();
+    // await seedUsers();
     await seedInvoices();
-    await seedRevenue();
+    // await seedCustomers();
+    // await seedRevenue();
     await db.execute(sql`COMMIT`);
 
     return Response.json({ message: 'Database seeded successfully' });
