@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import {customers, invoices, revenue, users} from '../lib/placeholder-data';
 import {sql} from "drizzle-orm";
 import {db} from "@/app/db/db";
+import {User} from "@/app/lib/definitions";
 
 async function seedUsers() {
   await db.execute(sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
@@ -14,12 +15,12 @@ async function seedUsers() {
     );
   `);
 
-  return await Promise.all(
-      users.map(async (user) => {
-        const hashedPassword = await bcrypt.hash(user.password, 10);
+  return Promise.all(
+      users.map((user: User) => {
+        // const hashedPassword = await bcrypt.hash(user.password, 10);
         return db.execute(sql`
             INSERT INTO users (id, name, email, password)
-            VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword}) ON CONFLICT (id) DO NOTHING;
+            VALUES (${user.id}, ${user.name}, ${user.email}, ${'foooooo'}) ON CONFLICT (id) DO NOTHING;
         `);
       }),
   );
@@ -39,11 +40,11 @@ async function seedInvoices() {
 
   return Promise.all(
       invoices.map((invoice) => {
-            return db.execute(sql`
-          INSERT INTO invoices (customer_id, amount, status, date) VALUES (${invoice.customer_id}, ${invoice.amount}, ${invoice.status}, ${invoice.date}) ON CONFLICT (id) DO NOTHING;
+        return db.execute(sql`
+            INSERT INTO invoices (customer_id, amount, status, date)
+            VALUES (${invoice.customer_id}, ${invoice.amount}, ${invoice.status}, ${invoice.date} ON CONFLICT (id) DO NOTHING;
         `)
-          },
-      ),
+      }),
   );
 }
 
