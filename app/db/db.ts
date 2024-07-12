@@ -1,15 +1,16 @@
-// import postgres from "postgres";
-//
-// const sql = postgres(process.env.DATABASE_URL!);
-//
-// export default sql;
-
-import { Pool } from "pg";
+import {Client, Pool} from "pg";
 import { drizzle } from "drizzle-orm/node-postgres";
 import * as schema from "@/app/db/schema";
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+});
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
+
+await pool.connect()
+await client.connect();
 
 export const db = drizzle(pool, { schema });

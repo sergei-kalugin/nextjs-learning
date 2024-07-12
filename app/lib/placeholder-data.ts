@@ -131,7 +131,7 @@ const invoices = [
   },
 ];
 
-const revenue = [
+const revenues = [
   { month: 'Jan', revenue: 2000 },
   { month: 'Feb', revenue: 1800 },
   { month: 'Mar', revenue: 2200 },
@@ -146,4 +146,4 @@ const revenue = [
   { month: 'Dec', revenue: 4800 },
 ];
 
-export { users, customers, invoices, revenue };
+export { users, customers, invoices, revenues };

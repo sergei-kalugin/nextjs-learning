@@ -1,43 +1,55 @@
 import bcrypt from 'bcrypt';
-import {customers, invoices, revenue, users} from '../lib/placeholder-data';
+import {customers, invoices, revenues, users} from '../lib/placeholder-data';
+import {
+  users as usersPgTable,
+  invoices as invoicesPgTable,
+  customers as customersPgTable,
+  revenues as revenuePgTable,
+} from '../db/schema';
 import {sql} from "drizzle-orm";
 import {db} from "@/app/db/db";
-import {User} from "@/app/lib/definitions";
+
+type NewUser = typeof usersPgTable.$inferInsert;
 
 async function seedUsers() {
-  await db.execute(sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
-  await db.execute(sql`
-    CREATE TABLE IF NOT EXISTS users (
-      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
-      email TEXT NOT NULL UNIQUE,
-      password TEXT NOT NULL
-    );
-  `);
+  // await db.execute(sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
+  // await db.execute(sql`
+  //   CREATE TABLE IF NOT EXISTS users (
+  //     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  //     name VARCHAR(255) NOT NULL,
+  //     email TEXT NOT NULL UNIQUE,
+  //     password TEXT NOT NULL
+  //   );
+  // `);
+  //
+  // return Promise.all(
+  //     users.map(async (user: User) => {
+  //       const hashedPassword = await bcrypt.hash(user.password, 10);
+  //       return db.execute(sql`
+  //           INSERT INTO users (id, name, email, password)
+  //           VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword}) ON CONFLICT (id) DO NOTHING;
+  //       `);
+  //     }),
+  // );
 
-  return Promise.all(
-      users.map((user: User) => {
-        // const hashedPassword = await bcrypt.hash(user.password, 10);
-        return db.execute(sql`
-            INSERT INTO users (id, name, email, password)
-            VALUES (${user.id}, ${user.name}, ${user.email}, ${'foooooo'}) ON CONFLICT (id) DO NOTHING;
-        `);
-      }),
-  );
+  return db
+      .insert(usersPgTable)
+      .values(users.map((user) => {
+        const hashedPassword = bcrypt.hashSync(user.password, 10);
+        const newUser: NewUser = {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          password: hashedPassword,
+        }
+
+        return newUser;
+      }))
+      .onConflictDoNothing()
+      .returning();
 }
 
 async function seedInvoices() {
-  await db.execute(sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
-  await db.execute(sql`
-    CREATE TABLE IF NOT EXISTS invoices (
-      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      customer_id UUID NOT NULL,
-      amount INT NOT NULL,
-      status VARCHAR(255) NOT NULL,
-      date DATE NOT NULL
-    );
-  `);
-
   return Promise.all(
       invoices.map((invoice) => {
         return db.execute(sql`
@@ -72,16 +84,16 @@ async function seedCustomers() {
 }
 
 async function seedRevenue() {
-  await db.execute(sql`
-    CREATE TABLE IF NOT EXISTS revenue (
-      month VARCHAR(4) NOT NULL UNIQUE,
-      revenue INT NOT NULL
-    );
-  `);
+  // await db.execute(sql`
+  //   CREATE TABLE IF NOT EXISTS revenues (
+  //     month VARCHAR(4) NOT NULL UNIQUE,
+  //     revenue INT NOT NULL
+  //   );
+  // `);
 
   return await Promise.all(
-      revenue.map((rev) => db.execute(sql`
-              INSERT INTO revenue (month, revenue)
+      revenues.map((rev) => db.execute(sql`
+              INSERT INTO revenues (month, revenue)
               VALUES (${rev.month}, ${rev.revenue}) ON CONFLICT (month) DO NOTHING;
           `),
       ),
@@ -92,12 +104,12 @@ export async function GET() {
   try {
     await db.execute(sql`BEGIN`);
     // await seedUsers();
-    await seedInvoices();
+    // await seedInvoices();
     // await seedCustomers();
-    // await seedRevenue();
+    await seedRevenue();
     await db.execute(sql`COMMIT`);
 
-    return Response.json({ message: 'Database seeded successfully' });
+    return Response.json({ message: 'Database seeded successfully'});
   } catch (error) {
     await db.execute(sql`ROLLBACK`);
     return Response.json({ error }, { status: 500 });
