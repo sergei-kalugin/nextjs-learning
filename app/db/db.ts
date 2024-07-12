@@ -10,7 +10,6 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-await pool.connect()
 await client.connect();
 
-export const db = drizzle(pool, { schema });
+export const db = drizzle(client, { schema });
