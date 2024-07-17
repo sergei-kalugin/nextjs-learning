@@ -1,7 +1,8 @@
 import React from "react";
+import DashboardSkeleton from "@/app/ui/skeletons";
 
 export default function Loading(): React.ReactElement {
   return(
-      <div className="text-gray-500 text-xs">Loading</div>
+      <DashboardSkeleton />
   )
 }
