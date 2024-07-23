@@ -18,7 +18,7 @@
     "react": "19.0.0-rc-f994737d14-20240522",
     "react-dom": "19.0.0-rc-f994737d14-20240522",
     "tailwindcss": "3.4.4",
-    "typescript": "^5.5.3",
+    "typescript": "^5.5.4",
     "use-debounce": "^10.0.1",
     "zod": "^3.23.8"
   },
@@ -31,7 +31,7 @@
     "db-migrate": "^0.11.14",
     "db-migrate-pg": "^1.5.2",
     "drizzle-kit": "^0.23.0",
-    "drizzle-orm": "^0.32.0",
+    "drizzle-orm": "^0.32.1",
     "pg": "^8.12.0",
     "sass": "^1.77.8"
   },
