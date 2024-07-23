@@ -2,8 +2,8 @@ import React, {Suspense} from "react";
 import {lusitana} from "@/app/ui/fonts";
 import Search from "@/app/ui/search";
 import {CreateInvoice} from "@/app/ui/invoices/buttons";
-import {useSearchParams} from "next/navigation";
 import {InvoicesTableSkeleton} from "@/app/ui/skeletons";
+import InvoicesTable from "@/app/ui/invoices/table";
 
 export default async function Page({
   searchParams,
@@ -27,7 +27,7 @@ export default async function Page({
         <CreateInvoice />
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} />
+        <InvoicesTable query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         [Pagination here]
