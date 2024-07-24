@@ -46,10 +46,12 @@ export async function createInvoice(prevState: State, formData: FormData) {
   // console.log(validatedFields.error?.flatten());
 
   if (!validatedFields.success) {
-    return {
+    const updatedState: State = {
       errors: validatedFields.error.flatten().fieldErrors,
       message: 'Missing fields. Failed to create invoice.',
     }
+
+    return updatedState;
   }
 
   const { amount, customerId, status } = validatedFields.data;
