@@ -42,9 +42,6 @@ export async function createInvoice(prevState: State, formData: FormData) {
     status: formData.get('status'),
   });
 
-  // console.log(validatedFields);
-  // console.log(validatedFields.error?.flatten());
-
   if (!validatedFields.success) {
     const updatedState: State = {
       errors: validatedFields.error.flatten().fieldErrors,
@@ -76,16 +73,23 @@ export async function createInvoice(prevState: State, formData: FormData) {
 // Update Invoice
 const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 
-export async function updateInvoice (id: string, formData: FormData) {
-  const {
-      customerId,
-      amount,
-      status,
-  } = UpdateInvoice.parse({
+export async function updateInvoice (prevState: State, formData: FormData) {
+  const validatedFields= UpdateInvoice.safeParse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),
     status: formData.get('status'),
-  })
+  });
+
+  if (!validatedFields.success) {
+    const updatedState: State = {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing fields. Failed to update invoice.",
+    }
+
+    return updatedState;
+  }
+
+  const { customerId, amount, status } = validatedFields.data;
 
   const amountInCents = amount * 100;
 
@@ -95,7 +99,7 @@ export async function updateInvoice (id: string, formData: FormData) {
     SET customer_id = ${customerId},
         amount = ${amountInCents},
         status = ${status}
-    WHERE id = ${id}
+    WHERE id = ${customerId}
   `);
   } catch (error) {
     return {
@@ -110,7 +114,6 @@ export async function updateInvoice (id: string, formData: FormData) {
 // Delete Invoice
 export async function deleteInvoice(id: string) {
   // todo: remove in production
-  throw new Error('Not implemented!');
 
   try {
     await db.execute(sql`
