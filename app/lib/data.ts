@@ -9,19 +9,10 @@ import {
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
-import {customers, invoices} from "@/app/db/schema";
 
 export async function fetchRevenue() {
   try {
-    // Artificially delay a response for demo purposes.
-    // Don't do this in production :)
-
-    console.log('Fetching revenue data...');
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-
     const data = await db.execute(sql<Revenue>`SELECT * FROM revenue`);
-
-    console.log('Data fetch completed after 3 seconds.');
 
     return data.rows;
   } catch (error) {
@@ -44,12 +35,6 @@ export async function fetchLatestInvoices() {
       ...invoice,
       amount: formatCurrency(invoice.amount),
     }));
-
-    console.log('Fetching latest invoices...');
-
-    await new Promise((resolve) => setTimeout(resolve, 6000));
-
-    console.log('Invoice data fetch completed after 6 seconds.');
 
     return latestInvoices;
   } catch (error) {
