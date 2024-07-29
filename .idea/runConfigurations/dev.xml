@@ -6,6 +6,7 @@
       <script value="dev" />
     </scripts>
     <node-interpreter value="$USER_HOME$/.nvm/versions/node/v22.4.1/bin/node" />
+    <package-manager value="npm" />
     <envs />
     <method v="2" />
   </configuration>
