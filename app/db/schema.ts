@@ -10,7 +10,6 @@ export const users = pgTable('users',{
 });
 
 export const invoices = pgTable('invoices',{
-  // id: uuid('id').defaultRandom().primaryKey(),
   customer_id: uuid('customer_id').notNull(),
   amount: text('amount').notNull(),
   status: text('status').notNull(),
@@ -26,7 +25,7 @@ export const customers = pgTable('customers',{
   }).notNull(),
 });
 
-export const revenues = pgTable('revenues',{
+export const revenue = pgTable('revenue',{
   // id: uuid('id').defaultRandom().primaryKey(),
   month: varchar('month').notNull(),
   revenue: integer('revenue').notNull(),
