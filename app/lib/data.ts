@@ -33,7 +33,7 @@ export async function fetchLatestInvoices() {
 
     const latestInvoices = data.rows.map((invoice) => ({
       ...invoice,
-      amount: formatCurrency(invoice.amount),
+      amount: formatCurrency(invoice.amount as number),
     }));
 
     return latestInvoices;
@@ -63,8 +63,8 @@ export async function fetchCardData() {
 
     const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
     const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
-    const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
-    const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
+    const totalPaidInvoices = formatCurrency(data[2].rows[0].paid as number ?? '0');
+    const totalPendingInvoices = formatCurrency(data[2].rows[0].pending as number ?? '0');
 
     return {
       numberOfCustomers,
@@ -151,7 +151,7 @@ export async function fetchInvoiceById(id: string) {
     const invoice = data.rows.map((invoice) => ({
       ...invoice,
       // Convert amount from cents to dollars
-      amount: invoice.amount / 100,
+      amount: invoice.amount as number / 100,
     }));
 
     return invoice[0];
@@ -201,8 +201,8 @@ export async function fetchFilteredCustomers(query: string) {
 
     const customers = data.rows.map((customer) => ({
       ...customer,
-      total_pending: formatCurrency(customer.total_pending),
-      total_paid: formatCurrency(customer.total_paid),
+      total_pending: formatCurrency(customer.total_pending as number),
+      total_paid: formatCurrency(customer.total_paid as number),
     }));
 
     return customers;

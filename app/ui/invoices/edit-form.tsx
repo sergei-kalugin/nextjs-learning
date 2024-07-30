@@ -18,8 +18,8 @@ export default function EditInvoiceForm({
   invoice,
   customers,
 }: {
-  invoice: InvoiceForm;
-  customers: CustomerField[];
+  invoice;
+  customers;
 }) {
 
 const initialState: State = {
@@ -28,7 +28,6 @@ const initialState: State = {
 };
 
 const [state, formAction] = useActionState(updateInvoice, initialState);
-
   return (
     <form action={formAction}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">

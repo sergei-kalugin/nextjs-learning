@@ -29,6 +29,5 @@ export const revenue = pgTable('revenue',{
   // id: uuid('id').defaultRandom().primaryKey(),
   month: varchar('month').notNull(),
   revenue: integer('revenue').notNull(),
-  foo: text('foo').notNull(),
 });
 
