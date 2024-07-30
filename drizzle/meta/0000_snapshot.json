@@ -1,5 +1,5 @@
 {
-  "id": "703e7a49-15db-45c9-a3cb-0c3cead546f4",
+  "id": "9c36cba0-105b-4db0-b2ed-5b99205a0b48",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -43,13 +43,6 @@
       "name": "invoices",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
         "customer_id": {
           "name": "customer_id",
           "type": "uuid",
@@ -80,17 +73,10 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.revenues": {
-      "name": "revenues",
+    "public.revenue": {
+      "name": "revenue",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
         "month": {
           "name": "month",
           "type": "varchar",
@@ -100,6 +86,12 @@
         "revenue": {
           "name": "revenue",
           "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "foo": {
+          "name": "foo",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         }

@@ -6,17 +6,16 @@ CREATE TABLE IF NOT EXISTS "customers" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "invoices" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"customer_id" uuid NOT NULL,
 	"amount" text NOT NULL,
 	"status" text NOT NULL,
 	"date" timestamp NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "revenues" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+CREATE TABLE IF NOT EXISTS "revenue" (
 	"month" varchar NOT NULL,
-	"revenue" integer NOT NULL
+	"revenue" integer NOT NULL,
+	"foo" text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (

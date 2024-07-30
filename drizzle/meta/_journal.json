@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1720804974009,
-      "tag": "0000_sad_vindicator",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1720807340767,
-      "tag": "0001_cuddly_zaladane",
+      "when": 1722360796545,
+      "tag": "0000_useful_garia",
       "breakpoints": true
     }
   ]
