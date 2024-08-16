@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="accountSettings">
-    <option name="activeProfile" value="profile:520537771909_wcas-it-MADS-Dev" />
     <option name="activeRegion" value="us-east-2" />
     <option name="recentlyUsedProfiles">
       <list>
+        <option value="profile:wcas-it-MADS-Dev-520537771909" />
         <option value="profile:520537771909_wcas-it-MADS-Dev" />
         <option value="profile:default" />
-        <option value="profile:wcas-it-MADS-Dev-520537771909" />
       </list>
     </option>
     <option name="recentlyUsedRegions">
