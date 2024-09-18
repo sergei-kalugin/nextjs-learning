@@ -36,7 +36,7 @@ export type State = {
   message?: string | null;
 }
 
-export async function createInvoice(
+export async function createInvoice (
     prevState: State,
     formData: FormData
 ) {
@@ -122,7 +122,6 @@ export async function updateInvoice (
 // Delete Invoice
 export async function deleteInvoice(id: string) {
   // todo: remove in production
-
   try {
     await db.execute(sql`
     DELETE FROM invoices
@@ -140,7 +139,7 @@ export async function deleteInvoice(id: string) {
 }
 
 // Authenticate User
-export async function authenticate(
+export async function authenticate (
     prevState: string | undefined,
     formData: FormData,
 ) {

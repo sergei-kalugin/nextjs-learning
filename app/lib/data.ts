@@ -2,7 +2,8 @@ import { sql } from 'drizzle-orm';
 import { db } from '@/app/db/db';
 import {
   CustomerField,
-  CustomersTableType, Invoice,
+  CustomersTableType,
+  Invoice,
   InvoiceForm,
   InvoicesTable,
   LatestInvoiceRaw,

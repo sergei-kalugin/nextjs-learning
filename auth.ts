@@ -22,9 +22,10 @@ async function getUser(email: string): Promise<User | undefined> {
 }
 
 export const {
-  auth,
+  handlers,
   signIn,
   signOut,
+  auth
 } = NextAuth({
   ...authConfig,
   providers: [
