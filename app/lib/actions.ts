@@ -1,6 +1,6 @@
 'use server';
 
-import { z } from 'zod';
+import {z} from 'zod';
 import {db} from "@/app/db/db";
 import {sql} from "drizzle-orm";
 import {revalidatePath} from "next/cache";

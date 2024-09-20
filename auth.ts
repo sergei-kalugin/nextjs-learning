@@ -5,7 +5,7 @@ import {z} from "zod";
 import {sql} from "drizzle-orm";
 import {db} from "@/app/db/db";
 import bcrypt from "bcrypt";
-import {User} from "@/app/lib/definitions";
+import { User } from "@/app/lib/definitions";
 
 async function getUser(email: string): Promise<User | undefined> {
   try {
